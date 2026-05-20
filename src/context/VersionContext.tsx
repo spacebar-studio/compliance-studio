@@ -1,0 +1,21 @@
+import { createContext, useContext, useState, type ReactNode } from 'react'
+
+type Version = 'v1' | 'v2' | 'v3' | 'v4'
+
+const VersionContext = createContext<{
+  version: Version
+  setVersion: (v: Version) => void
+}>({ version: 'v1', setVersion: () => {} })
+
+export function VersionProvider({ children }: { children: ReactNode }) {
+  const [version, setVersion] = useState<Version>('v1')
+  return (
+    <VersionContext.Provider value={{ version, setVersion }}>
+      {children}
+    </VersionContext.Provider>
+  )
+}
+
+export function useVersion() {
+  return useContext(VersionContext)
+}
