@@ -3,7 +3,7 @@ import { PageWrapper, BackButton } from '../components/Layout'
 import ExpandableSection from '../components/ExpandableSection'
 import PreviewPanel from '../components/PreviewPanel'
 import { motion } from 'framer-motion'
-import { Eye, Activity, TrendingUp, Clock, Shield, Palette, FileText, Code, Bell, Users, Lock, Settings, ToggleLeft, Zap } from 'lucide-react'
+import { Eye, Activity, TrendingUp, Clock, Zap } from 'lucide-react'
 
 export default function ProductDashboard() {
   const [previewOpen, setPreviewOpen] = useState(false)

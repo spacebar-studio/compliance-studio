@@ -18,7 +18,7 @@ const AUDIENCES = [
   { id: 'adults', label: 'Adults only', desc: '18 and older' },
 ]
 
-const transition = { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+const transition = { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }
 
 export default function SetupProduct() {
   const navigate = useNavigate()

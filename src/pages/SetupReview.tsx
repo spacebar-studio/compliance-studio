@@ -70,7 +70,6 @@ export default function SetupReview() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
             <div className="lg:col-span-3 space-y-0 rounded-2xl border border-navy-700/50 bg-navy-800/30 p-6">
               {REVIEW_SECTIONS.map((section) => {
-                const Icon = section.icon
                 const isEditing = editingSection === section.id
                 return (
                   <div key={section.id} className="border-b border-navy-700/40 last:border-0">

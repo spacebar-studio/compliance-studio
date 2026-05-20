@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { PageWrapper, BackButton } from '../../components/v2/Layout'
 import PreviewPanel from '../../components/PreviewPanel'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Eye, TrendingUp, Activity, Clock, ChevronRight, Check, Zap } from 'lucide-react'
+import { Eye, TrendingUp, Activity, Clock, ChevronRight, Zap } from 'lucide-react'
 
 const CONFIG_SECTIONS = [
   { id: 'details', title: 'Product Details', status: 'configured' as const, summary: 'Game · iOS · All ages · Medium risk' },

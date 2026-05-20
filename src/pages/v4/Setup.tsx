@@ -626,7 +626,7 @@ function DeviceFrame({ platform, orientation, mode, theme, themeIndex, t, screen
           <div style={{ overflow: 'hidden', height: platform === 'desktop' ? 'calc(100% - 32px)' : isLandscape ? '100%' : 'calc(100% - 22px)' }}>
             {screen === 'overview'
               ? <OverviewContent v={themeIndex} dk={dk} t={t} p={theme.primary} a={theme.accent} />
-              : <MethodsContent v={themeIndex} dk={dk} t={t} p={theme.primary} a={theme.accent} />}
+              : <MethodsContent v={themeIndex} dk={dk} t={t} p={theme.primary} />}
           </div>
         </motion.div>
       </AnimatePresence>
@@ -792,13 +792,12 @@ function OverviewContent({ v, dk, t, p, a }: SP) {
   )
 }
 
-function MethodsContent({ v, dk, t, p, a }: SP) {
+function MethodsContent({ v, dk, t, p }: Omit<SP, 'a'>) {
   const tx = dk ? '#FFF' : '#111'
   const sb = dk ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.45)'
   const dm = dk ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)'
   const sf = dk ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'
   const bd = dk ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'
-  const bg = dk ? '#111118' : '#FFF'
   const methods = [
     { letter: 'F', name: t.faceScan, desc: t.faceScanDesc, time: t.instant, color: p },
     { letter: 'S', name: t.selfie, desc: t.selfieDesc, time: t.sec30, color: '#E040A0' },
@@ -946,7 +945,7 @@ function MethodsContent({ v, dk, t, p, a }: SP) {
 
 /* ─── Edit Panel ───────────────────────────────────── */
 
-function EditPanel({ section, onDone }: { section: typeof SECTIONS[0]; onDone: () => void }) {
+function EditPanel({ section }: { section: typeof SECTIONS[0]; onDone: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}

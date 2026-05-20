@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageWrapper } from '../components/Layout'
 import { motion } from 'framer-motion'
-import { Gamepad2, Smartphone, MessageSquare, Tv, Settings, Globe, Tablet, Monitor, Layers } from 'lucide-react'
+import { Gamepad2, Smartphone, MessageSquare, Tv, Settings, Globe, Tablet, Layers } from 'lucide-react'
 
 const PRODUCT_TYPES = [
   { id: 'game', label: 'Game', icon: Gamepad2 },

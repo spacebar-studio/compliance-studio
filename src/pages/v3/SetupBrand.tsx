@@ -12,7 +12,6 @@ export default function SetupBrand() {
   const [generating, setGenerating] = useState(false)
   const [ready, setReady] = useState(false)
 
-  const uploadCount = Object.values(uploads).filter(Boolean).length
 
   const handleUpload = useCallback((key: keyof UploadState) => {
     setUploads(prev => {

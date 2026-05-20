@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Search, Zap, ChevronRight, ExternalLink, Check, Rocket, Smartphone, Eye, Shield, Globe } from 'lucide-react'
+import { ArrowRight, Sparkles, Search, Zap, ChevronRight, ExternalLink, Rocket, Eye, Shield, Globe } from 'lucide-react'
 import type { ElementType } from 'react'
 import ScreenEmbed from '../components/ScreenEmbed'
 
