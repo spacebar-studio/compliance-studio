@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Sparkles, Check, ChevronDown, Smartphone, Tablet, Monitor, Sun, Moon, RotateCcw, Globe, Shield, Users, Lock, Eye } from 'lucide-react'
 
@@ -104,17 +104,22 @@ const ease = [0.16, 1, 0.3, 1] as const
 
 export default function Setup() {
   const navigate = useNavigate()
-  const [url, setUrl] = useState('')
-  const [phase, setPhase] = useState<Phase>('input')
-  const [activeSection, setActiveSection] = useState<number>(0)
-  const [editing, setEditing] = useState<number | null>(null)
+  const [searchParams] = useSearchParams()
+  const demo = searchParams.get('demo')
+  const demoEdit = searchParams.get('edit')
+  const demoScreen = searchParams.get('screen')
+
+  const [url, setUrl] = useState(demo === 'ready' ? 'https://crazycat.game' : '')
+  const [phase, setPhase] = useState<Phase>(demo === 'ready' ? 'ready' : 'input')
+  const [activeSection, setActiveSection] = useState<number>(demoEdit !== null ? Number(demoEdit) : 0)
+  const [editing, setEditing] = useState<number | null>(demoEdit !== null ? Number(demoEdit) : null)
   const [themeIndex, setThemeIndex] = useState(0)
   const [platform, setPlatform] = useState<Platform>('mobile')
   const [orientation, setOrientation] = useState<Orientation>('portrait')
   const [mode, setMode] = useState<Mode>('light')
   const [lang, setLang] = useState<Lang>('en')
   const [launching, setLaunching] = useState(false)
-  const [screen, setScreen] = useState<ScreenView>('overview')
+  const [screen, setScreen] = useState<ScreenView>(demoScreen === 'methods' ? 'methods' : 'overview')
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -189,43 +194,19 @@ export default function Setup() {
           </form>
         </div>
 
-        <div className="w-[120px]" />
+        <div className="w-[160px]" />
       </header>
 
-      {/* Analyzing state */}
-      <AnimatePresence>
-        {phase === 'analyzing' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex flex-1 flex-col items-center justify-center"
-          >
-            <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}>
-              <Sparkles className="h-6 w-6 text-purple-400/60" />
-            </motion.div>
-            <p className="mt-5 text-[15px] text-white/30">Analyzing your product...</p>
-            <p className="mt-2 text-[12px] text-white/15">Reading compliance requirements, branding, and safety needs</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Main content */}
-      <AnimatePresence>
-        {phase === 'ready' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease }}
-            className="flex flex-1 overflow-hidden"
-          >
-            {/* Left panel — sections */}
-            <div className="w-[400px] shrink-0 overflow-y-auto border-r border-white/[0.04] px-8 py-8">
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, ease }}>
-                <div className="mb-8 flex items-center gap-3">
-                  <Sparkles className="h-4 w-4 text-purple-400/60" />
-                  <p className="text-[13px] text-white/30">AI Analysis Complete</p>
-                </div>
+      {/* Main layout — always visible */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left panel — sections */}
+        <div className="w-[400px] shrink-0 overflow-y-auto border-r border-white/[0.04] px-8 py-8">
+          {phase === 'ready' ? (
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, ease }}>
+              <div className="mb-8 flex items-center gap-3">
+                <Sparkles className="h-4 w-4 text-purple-400/60" />
+                <p className="text-[13px] text-white/30">AI Analysis Complete</p>
+              </div>
 
                 <div className="space-y-3">
                   {SECTIONS.map((section, i) => {
@@ -335,37 +316,155 @@ export default function Setup() {
                   </button>
                 </motion.div>
               </motion.div>
-            </div>
+          ) : (
+            <EmptyLeftPanel analyzing={phase === 'analyzing'} />
+          )}
+        </div>
 
-            {/* Right area — preview or edit form */}
-            <div className="relative flex flex-1 flex-col">
-              <AnimatePresence mode="wait">
-                {isEditing ? (
-                  <EditPanel key="edit" section={SECTIONS[editing]} onDone={() => setEditing(null)} />
-                ) : (
-                  <PreviewPanel
-                    key="preview"
-                    theme={theme}
-                    themeIndex={themeIndex}
-                    setThemeIndex={setThemeIndex}
-                    platform={platform}
-                    setPlatform={setPlatform}
-                    orientation={orientation}
-                    setOrientation={setOrientation}
-                    mode={mode}
-                    setMode={setMode}
-                    lang={lang}
-                    setLang={setLang}
-                    t={t}
-                    screen={screen}
-                    setScreen={setScreen}
-                  />
-                )}
-              </AnimatePresence>
-            </div>
+        {/* Right area — preview, edit form, or empty */}
+        <div className="relative flex flex-1 flex-col">
+          {phase === 'ready' ? (
+            <AnimatePresence mode="wait">
+              {isEditing ? (
+                <EditPanel key="edit" section={SECTIONS[editing]} onDone={() => setEditing(null)} />
+              ) : (
+                <PreviewPanel
+                  key="preview"
+                  theme={theme}
+                  themeIndex={themeIndex}
+                  setThemeIndex={setThemeIndex}
+                  platform={platform}
+                  setPlatform={setPlatform}
+                  orientation={orientation}
+                  setOrientation={setOrientation}
+                  mode={mode}
+                  setMode={setMode}
+                  lang={lang}
+                  setLang={setLang}
+                  t={t}
+                  screen={screen}
+                  setScreen={setScreen}
+                />
+              )}
+            </AnimatePresence>
+          ) : (
+            <EmptyRightPanel analyzing={phase === 'analyzing'} />
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Empty States ────────────────────────────────── */
+
+function EmptyLeftPanel({ analyzing }: { analyzing: boolean }) {
+  return (
+    <div className="space-y-6">
+      {analyzing && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-2 flex items-center gap-3">
+          <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}>
+            <Sparkles className="h-4 w-4 text-purple-400/60" />
           </motion.div>
-        )}
-      </AnimatePresence>
+          <p className="text-[13px] text-white/30">Analyzing your product...</p>
+        </motion.div>
+      )}
+      {!analyzing && (
+        <div className="mb-2">
+          <p className="text-[13px] text-white/20">Enter a URL above to get started</p>
+        </div>
+      )}
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className={`rounded-2xl border border-white/[0.04] bg-white/[0.015] p-5 transition-all ${analyzing ? 'animate-pulse' : ''}`}
+        >
+          <div className="flex items-center gap-4">
+            <div className="h-8 w-8 rounded-xl bg-white/[0.04]" />
+            <div className="flex-1 space-y-2">
+              <div className="h-3 w-28 rounded-full bg-white/[0.06]" />
+              <div className="h-2.5 w-44 rounded-full bg-white/[0.03]" />
+            </div>
+          </div>
+          {i === 0 && (
+            <div className="mt-5 space-y-3 border-t border-white/[0.04] pt-4">
+              {[0, 1, 2, 3].map((j) => (
+                <div key={j} className="flex items-center justify-between">
+                  <div className="h-2 rounded-full bg-white/[0.04]" style={{ width: 60 + j * 12 }} />
+                  <div className="h-2 rounded-full bg-white/[0.04]" style={{ width: 80 - j * 8 }} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+      <div className="rounded-full bg-white/[0.03] py-3">
+        <div className="mx-auto h-3 w-16 rounded-full bg-white/[0.04]" />
+      </div>
+    </div>
+  )
+}
+
+function EmptyRightPanel({ analyzing }: { analyzing: boolean }) {
+  return (
+    <div className="flex flex-1 flex-col items-center justify-center gap-6 px-8">
+      {/* Empty screen toggle */}
+      <div className="flex gap-1 rounded-xl border border-white/[0.04] bg-white/[0.02] p-1">
+        <div className="rounded-lg bg-white/[0.04] px-3.5 py-1.5">
+          <div className="h-2.5 w-24 rounded-full bg-white/[0.06]" />
+        </div>
+        <div className="rounded-lg px-3.5 py-1.5">
+          <div className="h-2.5 w-24 rounded-full bg-white/[0.03]" />
+        </div>
+      </div>
+
+      {/* Empty device frame */}
+      <div className="flex items-center gap-6">
+        <div
+          className={`flex flex-col items-center justify-center overflow-hidden rounded-[36px] border border-white/[0.06] bg-white/[0.02] shadow-[0_25px_80px_rgba(0,0,0,0.3)] ${analyzing ? 'animate-pulse' : ''}`}
+          style={{ width: 280, height: 560 }}
+        >
+          {analyzing ? (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}>
+                <Sparkles className="h-6 w-6 text-purple-400/40" />
+              </motion.div>
+              <p className="mt-4 text-[12px] text-white/20">Building preview...</p>
+            </motion.div>
+          ) : (
+            <>
+              <div className="mb-5 h-10 w-10 rounded-xl bg-white/[0.04]" />
+              <div className="mb-3 h-3 w-32 rounded-full bg-white/[0.05]" />
+              <div className="mb-8 h-2.5 w-44 rounded-full bg-white/[0.03]" />
+              <div className="space-y-3 px-8 w-full">
+                <div className="h-10 w-full rounded-xl bg-white/[0.03]" />
+                <div className="h-10 w-full rounded-xl bg-white/[0.025]" />
+              </div>
+              <div className="mt-8 h-9 w-36 rounded-full bg-white/[0.04]" />
+            </>
+          )}
+        </div>
+
+        {/* Empty variation dots */}
+        <div className="flex flex-col items-center gap-3">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-4 w-4 rounded-full bg-white/[0.06]" />
+          ))}
+        </div>
+      </div>
+
+      {/* Empty config bar */}
+      <div className="flex items-center gap-2 self-end">
+        {[3, 2, 2, 3].map((count, gi) => (
+          <div key={gi} className="flex rounded-xl border border-white/[0.04] bg-white/[0.02] p-0.5">
+            {Array.from({ length: count }).map((_, i) => (
+              <div key={i} className="flex h-8 w-8 items-center justify-center">
+                <div className="h-3.5 w-3.5 rounded bg-white/[0.04]" />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -405,7 +504,7 @@ function PreviewPanel({
     >
       <div className="flex flex-1 flex-col items-center justify-center gap-5 px-8">
         {/* Screen toggle */}
-        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.4 }} className="flex gap-1 rounded-xl border border-white/[0.04] bg-white/[0.02] p-1">
+        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.4 }} className="relative -left-[20px] flex gap-1 rounded-xl border border-white/[0.04] bg-white/[0.02] p-1">
           <button onClick={() => setScreen('overview')} className={`rounded-lg px-3.5 py-1.5 text-[11px] font-medium transition-all ${screen === 'overview' ? 'bg-white/[0.08] text-white/70' : 'text-white/25 hover:text-white/40'}`}>
             Parental Consent
           </button>

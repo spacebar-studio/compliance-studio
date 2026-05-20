@@ -1,8 +1,7 @@
-import { PageWrapper } from '../components/Layout'
-import ScreenEmbed from '../components/ScreenEmbed'
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Shield, Palette, CheckCircle, Rocket, LayoutGrid, Settings, Zap, ChevronRight, ExternalLink } from 'lucide-react'
+import { ArrowRight, Sparkles, Search, Zap, ChevronRight, ExternalLink, Check, Rocket, Smartphone, Eye, Shield, Globe } from 'lucide-react'
 import type { ElementType } from 'react'
+import ScreenEmbed from '../components/ScreenEmbed'
 
 interface ScreenDef {
   number: string
@@ -24,103 +23,165 @@ interface SectionDef {
 
 const SCREEN_SECTIONS: SectionDef[] = [
   {
-    title: 'Flow 1: First-Time Setup',
-    description: 'The "developer clicks an ad" journey — from landing page to a live compliance integration in under 5 minutes.',
+    title: 'Flow 1: AI-Powered Setup',
+    description: 'Paste a URL and AI analyzes everything — product type, compliance needs, branding, configuration — in seconds. One page, three expandable sections, live device preview.',
     color: '#7C5CFC',
     screens: [
       {
         number: '1.1',
         name: 'Welcome / Landing',
         route: '/',
-        icon: Shield,
-        description: 'Entry point from ad or direct visit. Establishes trust, communicates simplicity, and funnels to a single CTA.',
-        value: 'Replaces the need for a sales call or lengthy onboarding docs. Developer sees the end result (a branded verification flow) immediately.',
-        details: ['Hero with animated preview of verification flow', 'Single CTA: "Set Up Your App"', 'Trust signals: SOC 2, COPPA, GDPR badges', 'Sign In for returning users'],
+        icon: Search,
+        description: 'Entry point. Communicates the core value prop: "Paste your URL. We\'ll handle the rest." Single CTA funnels to the AI setup experience.',
+        value: 'Replaces multi-page onboarding with a single bold promise. Developer understands the product in 3 seconds.',
+        details: [
+          'Animated hero with search/analyze metaphor',
+          'Headline: "Paste your URL. We\'ll handle the rest."',
+          'Single CTA: "Get started"',
+          'Subtle purple glow background effect',
+          'Minimal nav: brand + sign in',
+          'Motion entrance animations (framer-motion)',
+        ],
         iframeHeight: 900,
       },
       {
         number: '1.2',
-        name: 'Step 1: Tell Us About Your Product',
-        route: '/setup',
-        icon: Shield,
-        description: 'Collects the minimum inputs needed to auto-configure everything. Visual selectors replace dropdowns and forms.',
-        value: 'Replaces the old Product Details page, Risk Level dropdown, workflow selection modal, and Create Product flow — all in one screen with smart defaults.',
-        details: ['Product name input', 'Product type: visual cards (Game, App, Social, Content, Other)', 'Platform: iOS, Android, Web, Multi-platform', 'Audience: All ages, 13+, 18+, "I\'m not sure"', '"I\'m not sure" expands inline follow-up Q&A that auto-recommends configuration', 'Optional app URL for context'],
+        name: 'AI Analyze — URL Input',
+        route: '/setup?demo=ready',
+        icon: Sparkles,
+        description: 'The core experience. Developer pastes a product URL, AI analyzes it, and generates a complete compliance configuration with live device preview.',
+        value: 'Replaces 3 separate setup steps (product, brand, review) with a single intelligent page. AI does the configuration work — user just reviews and tweaks.',
+        details: [
+          'URL input with "Analyze" button',
+          'AI analyzing phase with shimmer animation',
+          'Three expandable sections: Product Details, Safety & Compliance, Configuration',
+          'Rich edit panels with card selectors, chip toggles, toggle switches',
+          'Live device preview with 5 unique design variations',
+          'Two switchable preview screens: Parental Consent + Age Verification',
+          'Device frame controls: platform, orientation, dark/light mode, language',
+          'Variation selector with colored dots',
+          'Inline editing — no page navigation needed',
+          '"Go live" CTA when ready',
+        ],
         iframeHeight: 1000,
       },
       {
         number: '1.3',
-        name: 'Step 2: Brand Your Experience',
-        route: '/setup/brand',
-        icon: Palette,
-        description: 'AI-powered branding replaces 14 manual hex-value fields. Drop your logo, get a complete theme.',
-        value: 'Reduces branding setup from 14 color inputs + manual configuration to a single drag-and-drop. AI generates the entire theme from brand assets.',
-        details: ['Logo upload zone with drag-and-drop', 'Optional app screenshot upload for style matching', 'AI generates color palette in ~2 seconds (shimmer loading state)', '4 palette variations to choose from', 'Live device preview updates in real-time', 'Preview each step: Age Gate → Estimation → Appeal → Consent', 'Device switcher: iPhone, Tablet, Desktop', '"Customize" toggle reveals manual overrides (primary color, corner radius, mode)'],
-        iframeHeight: 950,
-      },
-      {
-        number: '1.4',
-        name: 'Step 3: Review & Launch',
-        route: '/setup/review',
-        icon: CheckCircle,
-        description: 'Summary of everything auto-configured with inline editing and an interactive preview of the end-user journey.',
-        value: 'Replaces all 12+ individual configuration pages. Everything is visible and editable from one screen. The developer sees exactly what their users will experience.',
-        details: ['Summary cards for each config section with green checkmarks', 'Inline expandable editing — no page navigation needed', 'Split view: config summary + live device preview', 'Interactive flow walkthrough (step through each verification screen)', 'Three launch options: Go Live, Test First, Save Draft', 'Loading state animation on "Go Live"'],
-        iframeHeight: 950,
-      },
-      {
-        number: '1.5',
         name: 'Success + Integration',
         route: '/setup/success',
         icon: Rocket,
-        description: 'Celebration moment with immediate integration code. The developer can copy-paste the SDK setup and go.',
-        value: 'Zero friction from "Go Live" to actual integration. API key, SDK install command, and initialization code are all on one screen with copy buttons.',
-        details: ['Animated success checkmark', 'SDK install command with copy-to-clipboard', 'Full initialization code snippet with syntax highlighting', 'API key display with copy button', 'CTAs: View Dashboard, Read Full Docs'],
+        description: 'Celebration moment with SDK integration code. Copy-paste and go.',
+        value: 'Zero friction from "Go Live" to integration. API key, install command, and init code on one screen.',
+        details: [
+          'Animated success checkmark (spring animation)',
+          'Product name confirmation: "Crazy Cat is live."',
+          'SDK install command with copy button',
+          'Full initialization code snippet with copy button',
+          'API key embedded in code sample',
+          'CTAs: View dashboard, All products',
+        ],
         iframeHeight: 800,
       },
     ],
   },
   {
-    title: 'Flow 2: Returning User',
-    description: 'The dashboard experience for developers managing existing products. Card-based overview with inline editing.',
-    color: '#3B82F6',
+    title: 'Flow 2: Device Preview System',
+    description: 'The live preview that powers the setup experience — two real compliance screens with 5 unique design variations each, fully themed and localized.',
+    color: '#E040A0',
     screens: [
       {
         number: '2.1',
-        name: 'Products Home',
-        route: '/products',
-        icon: LayoutGrid,
-        description: 'Card-based overview of all products. Replaces the old table-based listing.',
-        value: 'Each product is a visual card showing status, key metrics, and quick actions at a glance. No more scanning rows in a table.',
-        details: ['Product cards with icon, name, type, platform, status badge', 'Status: Live (green), Test Mode (amber), Draft (gray)', 'Key metric per card: verified users or setup %', 'Last activity timestamp', 'Quick actions: Manage, Preview', 'New Product card (dashed border) links to setup wizard', 'Search bar for filtering'],
-        iframeHeight: 700,
+        name: 'Preview: Parental Consent',
+        route: '/setup?demo=ready&screen=overview',
+        icon: Shield,
+        description: 'The "Verify your child\'s age" screen shown in the device preview. Themed with the product\'s branding and compliance configuration.',
+        value: 'Developer sees exactly what parents will experience. Each of the 5 variations offers a completely different layout, hierarchy, and visual approach.',
+        details: [
+          'Standard: classic card layout with gradient header and step indicators',
+          'Minimal: typography-focused, neutral palette, clean whitespace',
+          'Playful: rounded elements, pink/warm tones, friendly copy',
+          'Immersive: full-bleed gradient, large CTA, ambient background',
+          'Compact: dense info layout, sidebar-style steps, small footprint',
+          'Supports 3 languages: English, Spanish, Chinese',
+          'Dark/light mode toggle',
+          'Responsive across phone, tablet, desktop frames',
+        ],
+        iframeHeight: 1000,
       },
       {
         number: '2.2',
-        name: 'Product Dashboard',
-        route: '/products/pixel-quest',
-        icon: Settings,
-        description: 'The single hub for managing one product. Every config section is inline-expandable. No sidebar navigation, no separate pages.',
-        value: 'Consolidates the entire old sidebar navigation (Product Details, Developer Settings, Branding, Age Assurance, Age Appeal, Adult Verification, Parental Consent, and all CDK sections) into one unified view with expandable cards.',
-        details: ['Hero: product icon, name, status badge, live metrics', 'Metrics: verified today, success rate, avg time', 'Expandable sections: Product Details, Branding, Age Assurance, Age Appeal, Adult Verification, Parental Consent, Developer Settings', 'Each section shows status (On/Off/Configured) and summary', 'Expand to edit with full form controls: inputs, radio buttons, toggles, sliders', 'Live Preview button opens device preview overlay', 'Activity feed on the side: timestamped change log', 'Preview panel: full slide-out with device frame, flow steps, device switcher'],
-        iframeHeight: 1200,
+        name: 'Preview: Age Verification Methods',
+        route: '/setup?demo=ready&screen=methods',
+        icon: Eye,
+        description: 'The "Verify your age" methods list — face scan, selfie check, ID upload — shown in the device preview with timing estimates and privacy assurances.',
+        value: 'Developer previews the exact verification method selection their users will see. 5 unique layouts showcase different approaches to method presentation.',
+        details: [
+          'Standard: stacked method cards with icons, timing badges, descriptions',
+          'Minimal: clean list with subtle dividers and monochrome icons',
+          'Playful: large colorful method tiles with playful timing labels',
+          'Immersive: full-width method rows with gradient accents',
+          'Compact: tight grid of methods with inline timing',
+          '"Recommended" badge on preferred method',
+          'Privacy footer with 3 trust signals',
+          'Powered by branding at bottom',
+        ],
+        iframeHeight: 1000,
       },
     ],
   },
   {
-    title: 'Flow 3: Global',
-    description: 'Settings and account management that apply across all products.',
-    color: '#10B981',
+    title: 'Flow 3: Edit Panels',
+    description: 'Rich inline editing experiences that replace traditional forms with interactive card selectors, chip toggles, and visual controls.',
+    color: '#059669',
     screens: [
       {
         number: '3.1',
-        name: 'Settings',
-        route: '/settings',
-        icon: Settings,
-        description: 'Organization settings, team management, API keys, webhooks, and notification preferences.',
-        value: 'Centralizes all account-level configuration. Team members, API credentials, webhook endpoints, and alert preferences in one clean view.',
-        details: ['Organization: company name, team members with roles (Owner, Admin, Developer), invite flow', 'API Keys: Live and Test keys with copy and rotate actions', 'Webhooks: endpoint URLs with event type tags, add/delete', 'Notifications: toggle alerts for verification failures, appeal submissions, weekly summary'],
-        iframeHeight: 950,
+        name: 'Edit: Product Details',
+        route: '/setup?demo=ready&edit=0',
+        icon: Globe,
+        description: 'Product configuration panel with visual card selectors for product type and audience, chip toggles for genre and platforms.',
+        value: 'Feels like managing, not form-filling. Card selectors make choices tangible. Chip toggles allow multi-select without dropdowns.',
+        details: [
+          'Product name text input',
+          'Product type: visual cards (Game, App, Social, Content)',
+          'Genre: multi-select chips (Action, Adventure, Puzzle, RPG, Strategy, Sports, Casual)',
+          'Platform toggles: iOS, Android, Web, PC with toggle switches',
+          'Audience age selector cards (Everyone, Teen 13+, Mature 17+, Adult 18+)',
+        ],
+        iframeHeight: 1000,
+      },
+      {
+        number: '3.2',
+        name: 'Edit: Safety & Compliance',
+        route: '/setup?demo=ready&edit=1',
+        icon: Shield,
+        description: 'Safety configuration with age range cards, region selectors, data handling chips, and a visual risk indicator bar.',
+        value: 'Complex compliance decisions made visual and intuitive. Risk level shown as a gradient bar rather than a dropdown.',
+        details: [
+          'Age range cards (Under 13, 13–17, 18+, All Ages)',
+          'Region cards with flag indicators (US, EU, UK, Global)',
+          'Data handling: multi-select chips (Biometric, PII, Payment, Health, Location)',
+          'Risk level: gradient bar from Low to Critical',
+          'Visual risk indicator with labeled segments',
+        ],
+        iframeHeight: 1000,
+      },
+      {
+        number: '3.3',
+        name: 'Edit: Configuration',
+        route: '/setup?demo=ready&edit=2',
+        icon: Zap,
+        description: 'Toggle cards for each compliance module — Age Gate, Parental Consent, ID Verification — with expandable sub-options.',
+        value: 'Each module is a card you flip on/off. Expanding reveals granular settings without leaving the page.',
+        details: [
+          'Age Gate toggle card with redirect URL sub-option',
+          'Parental Consent toggle card with email verification and SMS options',
+          'ID Verification toggle card with accepted document types',
+          'Each card: icon, title, description, toggle switch',
+          'Expandable sub-options appear on toggle-on',
+          'Consistent card pattern across all modules',
+        ],
+        iframeHeight: 1000,
       },
     ],
   },
@@ -128,22 +189,22 @@ const SCREEN_SECTIONS: SectionDef[] = [
 
 export default function AllScreens() {
   return (
-    <PageWrapper>
-      <div className="mx-auto max-w-5xl px-6 py-12">
+    <div className="min-h-screen bg-navy-950">
+      <div className="mx-auto max-w-5xl px-6 py-16">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-purple-500/20 bg-purple-500/10 px-3 py-1 text-xs text-purple-400">
             <Zap className="h-3 w-3" />
-            Complete Screen Inventory
+            AI Analyze — Complete Screen Inventory
           </div>
-          <h1 className="mb-2 text-3xl font-bold tracking-tight">All Screens</h1>
+          <h1 className="mb-2 text-3xl font-bold tracking-tight text-white">All Screens</h1>
           <p className="mb-4 text-gray-400">
-            Every screen in the redesigned Compliance Studio experience — descriptions, value, and the live UI.
+            Every screen in the AI Analyze experience — paste a URL, AI configures everything, preview it live, go live in 3 clicks.
           </p>
           <div className="mb-12 flex items-center gap-6 border-b border-navy-700/50 pb-6">
-            <Stat label="Total screens" value="8" />
-            <Stat label="Setup steps" value="3" />
-            <Stat label="Clicks to go live" value="~5" />
-            <Stat label="Replaced" value="64 frames → 8 views" />
+            <Stat label="Screens" value="3" />
+            <Stat label="Preview variations" value="10" />
+            <Stat label="Edit panels" value="3" />
+            <Stat label="Clicks to go live" value="3" />
           </div>
 
           <div className="space-y-20">
@@ -152,7 +213,7 @@ export default function AllScreens() {
                 <div className="mb-8">
                   <div className="mb-2 flex items-center gap-3">
                     <div className="h-1 w-8 rounded-full" style={{ backgroundColor: section.color }} />
-                    <h2 className="text-xl font-bold">{section.title}</h2>
+                    <h2 className="text-xl font-bold text-white">{section.title}</h2>
                   </div>
                   <p className="ml-11 text-sm text-gray-500">{section.description}</p>
                 </div>
@@ -180,7 +241,7 @@ export default function AllScreens() {
                             <div>
                               <div className="flex items-center gap-2">
                                 <span className="font-mono text-xs text-gray-600">{screen.number}</span>
-                                <h3 className="text-lg font-semibold">{screen.name}</h3>
+                                <h3 className="text-lg font-semibold text-white">{screen.name}</h3>
                               </div>
                               <p className="font-mono text-xs text-gray-600">{screen.route}</p>
                             </div>
@@ -238,17 +299,17 @@ export default function AllScreens() {
           </div>
 
           <div className="mt-20 rounded-2xl border border-navy-700/50 bg-navy-800/30 p-6">
-            <h3 className="mb-4 text-base font-semibold">What was consolidated</h3>
+            <h3 className="mb-4 text-base font-semibold text-white">What AI Analyze replaces</h3>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {[
-                ['14 hex-value branding fields', '1 logo upload + AI generation'],
-                ['3 duplicate section layouts', '1 adaptive dashboard'],
-                ['Deep sidebar (12+ nav items)', 'Flat top nav (3 items)'],
-                ['19 separate page types', '8 unified views'],
-                ['64 design frames', '~25 state variations'],
-                ['Modal-based product creation', 'Full-page guided wizard'],
-                ['Separate config pages', 'Inline expandable sections'],
-                ['No preview of user experience', 'Always-available device preview'],
+                ['3 separate setup pages', '1 AI-powered single page'],
+                ['Manual product type selection', 'AI auto-detects from URL'],
+                ['14 hex-value branding fields', 'AI-generated branded preview'],
+                ['Static mockups', '10 live design variations'],
+                ['English-only preview', '3-language live preview'],
+                ['No device preview', 'Phone / tablet / desktop frames'],
+                ['Form-based configuration', 'Card selectors + chip toggles'],
+                ['64 design frames', '3 screens, infinite variations'],
               ].map(([before, after], i) => (
                 <div key={i} className="flex items-center gap-3 rounded-lg bg-navy-800 p-3">
                   <span className="shrink-0 text-xs text-red-400/60 line-through">{before}</span>
@@ -260,14 +321,14 @@ export default function AllScreens() {
           </div>
         </motion.div>
       </div>
-    </PageWrapper>
+    </div>
   )
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-lg font-bold">{value}</p>
+      <p className="text-lg font-bold text-white">{value}</p>
       <p className="text-xs text-gray-500">{label}</p>
     </div>
   )
